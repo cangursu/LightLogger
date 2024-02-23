@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <unistd.h>
 
 
 
@@ -28,7 +29,6 @@ inline std::string nowStr ()
 }
 
 
-
 std::string LLogMsg (const char *file, int line, const char *func)
 {
     const char *fileName = std::strrchr(file, '/');
@@ -40,14 +40,12 @@ std::string LLogMsg (const char *file, int line, const char *func)
     const char *tmp = strchr(funcName, '(');
     size_t funcNameLentgth = (nullptr == tmp) ? std::strlen(funcName) : (tmp - funcName);
 
-
     std::ostringstream ss;
     ss << fileName << ":" << line << " (";
     ss.write(funcName, funcNameLentgth);
     ss << ")";
     return ss.str();
 }
-
 
 
 LoggerImp::LoggerImp (LLogLevelType type, flag_t opt /*= 0xff*/)
@@ -57,10 +55,12 @@ LoggerImp::LoggerImp (LLogLevelType type, flag_t opt /*= 0xff*/)
     if (Flag_AddLevelTag())
         (*this) << "[" <<  to_string(type) <<  "] ";
 
+    if (Flag_AppProcessID())
+        (*this) << "[" << gettid () <<  "] ";
+
     if (Flag_AddTimeStamp())
         (*this)  << nowStr() << " - ";
 }
-
 
 
 LoggerImp::LoggerImp (LLogLevelType type, const std::string &msg,
@@ -71,22 +71,24 @@ LoggerImp::LoggerImp (LLogLevelType type, const std::string &msg,
 }
 
 
-
 LoggerImp::~LoggerImp ()
 {
-    if (Flag_DispConsole())
-        std::cout << LogText() << ((false == Flag_AddLineFeed())?"\n": "");
+    if (Flag_DispConsole() && (_logLevel >= LLogLevel()))
+        std::cout << LogText();
 }
-
 
 
 std::string LoggerImp::LogText()
 {
-    if (Flag_AddLineFeed())
-        _sstream << ('\n');
-    return std::move(_sstream.str());
+    std::string txt;
+    if(_logLevel >= LLogLevel())
+    {
+        txt = _sstream.str();
+        if (Flag_AddLineFeed())
+            txt += ('\n');
+    }
+    return txt;
 }
-
 
 
 void LoggerImp::LLogLevel (LoggerImp::LLogLevelType level)
@@ -100,7 +102,6 @@ LoggerImp::LLogLevelType LoggerImp::LLogLevel ()
 {
     return LoggerImp::_logLevelEnv;
 }
-
 
 
 std::string to_string (LoggerImp::LLogLevelType type)
