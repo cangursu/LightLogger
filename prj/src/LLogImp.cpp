@@ -108,12 +108,12 @@ std::string to_string (LoggerImp::LLogLevelType type)
 {
     switch(type)
     {
-        case LoggerImp::LLogLevelType::DEBUG      : return "DEBUG"    ;
-        case LoggerImp::LLogLevelType::TRACE      : return "TRACE"    ;
-        case LoggerImp::LLogLevelType::INFO       : return "INFO"     ;
-        case LoggerImp::LLogLevelType::WARN       : return "WARN"     ;
-        case LoggerImp::LLogLevelType::ERROR      : return "ERROR"    ;
-        case LoggerImp::LLogLevelType::CRITICAL   : return "CRITICAL" ;
+        case LoggerImp::LLogLevelType::TRACE    : return "TRACE"    ;
+        case LoggerImp::LLogLevelType::DEBUG    : return "DEBUG"    ;
+        case LoggerImp::LLogLevelType::INFO     : return "INFO"     ;
+        case LoggerImp::LLogLevelType::WARN     : return "WARN"     ;
+        case LoggerImp::LLogLevelType::ERROR    : return "ERROR"    ;
+        case LoggerImp::LLogLevelType::FATAL    : return "FATAL"    ;
     }
     return "NA   ";
 }

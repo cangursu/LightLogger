@@ -9,12 +9,12 @@
 #include <iostream>
 
 
-#define LLOG_ERROR   LogError     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LLOG_WARN    LogWarn      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LLOG_INFO    LogInfo      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LLOG_DEBUG   LogDebug     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LLOG_TRACE   LogTrace     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LLOG_CRITC   LogCritical  ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
+#define LOG_TRACE   LogTrace     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
+#define LOG_DEBUG   LogDebug     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
+#define LOG_INFO    LogInfo      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
+#define LOG_WARN    LogWarn      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
+#define LOG_ERROR   LogError     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
+#define LOG_FATAL   LogFatal     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
 
 
 
@@ -29,7 +29,7 @@ class LogError : public LoggerImp
         }
         ~LogError()
         {
-            std::cout << LogText();
+//            std::cout << LogText();
         }
 };
 
@@ -43,7 +43,7 @@ class LogWarn : public LoggerImp
         }
         ~LogWarn()
         {
-            std::cout << LogText();
+//            std::cout << LogText();
         }
 };
 
@@ -57,7 +57,7 @@ class LogInfo : public LoggerImp
         }
         ~LogInfo()
         {
-            std::cout << LogText();
+//            std::cout << LogText();
         }
 };
 
@@ -71,7 +71,7 @@ class LogDebug : public LoggerImp
         }
         ~LogDebug()
         {
-            std::cout << LogText();
+//            std::cout << LogText();
         }
 };
 
@@ -85,23 +85,23 @@ class LogTrace : public LoggerImp
         }
         ~LogTrace()
         {
-            std::cout << LogText();
+//            std::cout << LogText();
         }
 
 };
 
 
 
-class LogCritical : public LoggerImp
+class LogFatal : public LoggerImp
 {
     public :
-        LogCritical(const std::string &msg, LoggerImp::flag_t flags)
-            : LoggerImp(LoggerImp::LLogLevelType::CRITICAL, msg, flags)
+        LogFatal(const std::string &msg, LoggerImp::flag_t flags)
+            : LoggerImp(LoggerImp::LLogLevelType::FATAL, msg, flags)
         {
         }
-        ~LogCritical()
+        ~LogFatal()
         {
-            std::cout << LogText();
+//            std::cout << LogText();
         }
 
 };

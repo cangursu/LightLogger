@@ -7,6 +7,7 @@
 
 
 #include <sstream>
+#include <stdint.h>
 
 #include <iostream> //TODO: DO_NOT_PUSH
 #include <bitset> //TODO: DO_NOT_PUSH
@@ -31,12 +32,12 @@ public:
 
     enum class LLogLevelType
     {
-        DEBUG,
         TRACE,
+        DEBUG,
         INFO,
         WARN,
         ERROR,
-        CRITICAL,
+        FATAL,
     };
 
     using flag_t = uint16_t;
