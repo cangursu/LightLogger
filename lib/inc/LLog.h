@@ -9,12 +9,12 @@
 #include <iostream>
 
 
-#define LOG_TRACE   LogTrace     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LOG_DEBUG   LogDebug     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LOG_INFO    LogInfo      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LOG_WARN    LogWarn      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LOG_ERROR   LogError     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
-#define LOG_FATAL   LogFatal     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) & ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)) )
+#define LOG_TRACE   LogTrace     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) /*& ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)*/ ) )
+#define LOG_DEBUG   LogDebug     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) /*& ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)*/ ) )
+#define LOG_INFO    LogInfo      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) /*& ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)*/ ) )
+#define LOG_WARN    LogWarn      ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) /*& ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)*/ ) )
+#define LOG_ERROR   LogError     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) /*& ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)*/ ) )
+#define LOG_FATAL   LogFatal     ( LLogMsg (__FILE__, __LINE__, __func__), (static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::ALL) /*& ~static_cast<LoggerImp::flag_t>(LoggerImp::LLogFlags::DISP_CONSOLE)*/ ) )
 
 
 
