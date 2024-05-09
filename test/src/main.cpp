@@ -12,6 +12,8 @@ TEST(LogImpl, LogFlag)
     EXPECT_FALSE(log.Flag_AddTimeStamp() );
     EXPECT_FALSE(log.Flag_AddFileLine()  );
     EXPECT_FALSE(log.Flag_AddLineFeed()  );
+    EXPECT_FALSE(log.Flag_AppProcessID() );
+    EXPECT_FALSE(log.Flag_AppThreadID()  );
     EXPECT_FALSE(log.Flag_DispConsole()  );
 
     log.FlagSet(LoggerImp::LLogFlags::ADD_LEVEL_TAG);
@@ -19,6 +21,8 @@ TEST(LogImpl, LogFlag)
     EXPECT_FALSE(log.Flag_AddTimeStamp() );
     EXPECT_FALSE(log.Flag_AddFileLine()  );
     EXPECT_FALSE(log.Flag_AddLineFeed()  );
+    EXPECT_FALSE(log.Flag_AppProcessID() );
+    EXPECT_FALSE(log.Flag_AppThreadID()  );
     EXPECT_FALSE(log.Flag_DispConsole()  );
 
     log.FlagSet(LoggerImp::LLogFlags::ADD_TIMESTAMP);
@@ -26,6 +30,8 @@ TEST(LogImpl, LogFlag)
     EXPECT_TRUE (log.Flag_AddTimeStamp() );
     EXPECT_FALSE(log.Flag_AddFileLine()  );
     EXPECT_FALSE(log.Flag_AddLineFeed()  );
+    EXPECT_FALSE(log.Flag_AppProcessID() );
+    EXPECT_FALSE(log.Flag_AppThreadID()  );
     EXPECT_FALSE(log.Flag_DispConsole()  );
 
     log.FlagSet(LoggerImp::LLogFlags::ADD_FILELINE);
@@ -33,6 +39,8 @@ TEST(LogImpl, LogFlag)
     EXPECT_TRUE (log.Flag_AddTimeStamp() );
     EXPECT_TRUE (log.Flag_AddFileLine()  );
     EXPECT_FALSE(log.Flag_AddLineFeed()  );
+    EXPECT_FALSE(log.Flag_AppProcessID() );
+    EXPECT_FALSE(log.Flag_AppThreadID()  );
     EXPECT_FALSE(log.Flag_DispConsole()  );
 
     log.FlagSet(LoggerImp::LLogFlags::ADD_LINEFEED);
@@ -40,6 +48,26 @@ TEST(LogImpl, LogFlag)
     EXPECT_TRUE (log.Flag_AddTimeStamp() );
     EXPECT_TRUE (log.Flag_AddFileLine()  );
     EXPECT_TRUE (log.Flag_AddLineFeed()  );
+    EXPECT_FALSE(log.Flag_AppProcessID() );
+    EXPECT_FALSE(log.Flag_AppThreadID()  );
+    EXPECT_FALSE(log.Flag_DispConsole()  );
+
+    log.FlagSet(LoggerImp::LLogFlags::ADD_PROCID);
+    EXPECT_TRUE (log.Flag_AddLevelTag()  );
+    EXPECT_TRUE (log.Flag_AddTimeStamp() );
+    EXPECT_TRUE (log.Flag_AddFileLine()  );
+    EXPECT_TRUE (log.Flag_AddLineFeed()  );
+    EXPECT_TRUE (log.Flag_AppProcessID() );
+    EXPECT_FALSE(log.Flag_AppThreadID()  );
+    EXPECT_FALSE(log.Flag_DispConsole()  );
+
+    log.FlagSet(LoggerImp::LLogFlags::ADD_THRDID);
+    EXPECT_TRUE (log.Flag_AddLevelTag()  );
+    EXPECT_TRUE (log.Flag_AddTimeStamp() );
+    EXPECT_TRUE (log.Flag_AddFileLine()  );
+    EXPECT_TRUE (log.Flag_AddLineFeed()  );
+    EXPECT_TRUE (log.Flag_AppProcessID() );
+    EXPECT_TRUE (log.Flag_AppThreadID()  );
     EXPECT_FALSE(log.Flag_DispConsole()  );
 
     log.FlagSet(LoggerImp::LLogFlags::DISP_CONSOLE);
@@ -47,12 +75,14 @@ TEST(LogImpl, LogFlag)
     EXPECT_TRUE (log.Flag_AddTimeStamp() );
     EXPECT_TRUE (log.Flag_AddFileLine()  );
     EXPECT_TRUE (log.Flag_AddLineFeed()  );
+    EXPECT_TRUE (log.Flag_AppProcessID() );
+    EXPECT_TRUE (log.Flag_AppThreadID()  );
     EXPECT_TRUE (log.Flag_DispConsole()  );
 }
 
 TEST(LogImpl, LogText)
 {
-    EXPECT_EQ(LLogMsg(__FILE__, __LINE__, __PRETTY_FUNCTION__), "main.cpp:55 (void LogImpl_LogText_Test::TestBody)");
+    EXPECT_EQ(LLogMsg(__FILE__, __LINE__, __PRETTY_FUNCTION__), "main.cpp:85 (void LogImpl_LogText_Test::TestBody)");
 
     LoggerImp log(  LoggerImp::LLogLevelType::TRACE,
                     LLogMsg (__FILE__, __LINE__, __PRETTY_FUNCTION__),
@@ -60,9 +90,8 @@ TEST(LogImpl, LogText)
                  );
     log  << "Test:" << 1 << ", " << 2.1 << ", " << true;
 
-    EXPECT_EQ(log.LogText() , "[TRACE] main.cpp:58 (void LogImpl_LogText_Test::TestBody) - Test:1, 2.1, 1");
+    EXPECT_EQ(log.LogText() , "[TRACE] main.cpp:88 (void LogImpl_LogText_Test::TestBody) - Test:1, 2.1, 1");
     log.FlagReset(LoggerImp::LLogFlags::DISP_CONSOLE);
-
 }
 
 

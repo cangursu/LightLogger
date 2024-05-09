@@ -49,7 +49,8 @@ public:
         ADD_FILELINE  = (0x01 << 2),
         ADD_LINEFEED  = (0x01 << 3),
         ADD_PROCID    = (0x01 << 4),
-        DISP_CONSOLE  = (0x01 << 5),
+        ADD_THRDID    = (0x01 << 5),
+        DISP_CONSOLE  = (0x01 << 6),
         ALL           = 0xff
     };
 
@@ -70,13 +71,12 @@ public:
     bool Flag_AddFileLine() const       { return Flag(LLogFlags::ADD_FILELINE);         }
     bool Flag_AddLineFeed() const       { return Flag(LLogFlags::ADD_LINEFEED);         }
     bool Flag_AppProcessID() const      { return Flag(LLogFlags::ADD_PROCID);           }
+    bool Flag_AppThreadID() const       { return Flag(LLogFlags::ADD_THRDID);           }
     bool Flag_DispConsole() const       { return Flag(LLogFlags::DISP_CONSOLE);         }
 
     bool Flag(LLogFlags flgitem) const  { return static_cast<flag_t>(_flags) & static_cast<flag_t>(flgitem);    }
     void FlagSet(LLogFlags flgitem)     { _flags |= static_cast<LoggerImp::flag_t>(flgitem);                    }
     void FlagReset(LLogFlags flgitem)   { _flags &= ~static_cast<LoggerImp::flag_t>(flgitem);                   }
-
-
 
     virtual std::string     LogText();
 

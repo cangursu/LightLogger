@@ -53,10 +53,13 @@ LoggerImp::LoggerImp (LLogLevelType type, flag_t opt /*= 0xff*/)
     , _flags  (static_cast<flag_t>(opt))
 {
     if (Flag_AddLevelTag())
-        (*this) << "[" <<  to_string(type) <<  "] ";
+        (*this) << "[" <<  to_string(type) << "] ";
 
     if (Flag_AppProcessID())
-        (*this) << "[" << gettid () <<  "] ";
+        (*this) << "[" << getpid() << "] ";
+
+    if (Flag_AppThreadID())
+        (*this) << "[" << gettid() << "] ";
 
     if (Flag_AddTimeStamp())
         (*this)  << nowStr() << " - ";
