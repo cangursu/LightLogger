@@ -22,7 +22,7 @@ find_package(GTest REQUIRED)
 add_executable(${PROJECT_NAME}  ${SOURCE_SCR} ${SOURCE_TEST}  )
 
 target_include_directories(${PROJECT_NAME} PRIVATE "../lib/inc" "inc" )
-target_link_libraries(${PROJECT_NAME} PRIVATE GTest::GTest)
+target_link_libraries(${PROJECT_NAME} PRIVATE z GTest::GTest)
 
 
 

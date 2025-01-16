@@ -27,6 +27,7 @@ add_library   (${PROJECT_NAME} SHARED ${HEADER} ${SOURCE})
 # link libraries
 target_include_directories(${PROJECT_NAME} PRIVATE  "inc" )
 # target_link_libraries(${PROJECT_NAME} -lpthread -lboost_system -lssl -lcrypto -lrt)
+target_link_libraries(${PROJECT_NAME} z)
 
 set_target_properties(${PROJECT_NAME}     PROPERTIES VERSION       ${PROJECT_VERSION})
 set_target_properties(${PROJECT_NAME}     PROPERTIES SOVERSION     ${PROJECT_VERSION_MAJOR})

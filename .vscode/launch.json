@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Client : (gdb) Launch",
+            "name": "Client",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/llog_client",
@@ -30,7 +30,7 @@
             ]
         },
         {
-            "name": "Test : (gdb) Launch",
+            "name": "Test",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/llog_test",

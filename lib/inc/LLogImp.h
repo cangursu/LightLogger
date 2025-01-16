@@ -46,11 +46,12 @@ public:
         NONE          = 0x00,
         ADD_LEVEL_TAG = (0x01 << 0),
         ADD_TIMESTAMP = (0x01 << 1),
-        ADD_FILELINE  = (0x01 << 2),
-        ADD_LINEFEED  = (0x01 << 3),
-        ADD_PROCID    = (0x01 << 4),
-        ADD_THRDID    = (0x01 << 5),
-        DISP_CONSOLE  = (0x01 << 6),
+        ADD_DATE      = (0x01 << 2),
+        ADD_FILELINE  = (0x01 << 3),
+        ADD_LINEFEED  = (0x01 << 4),
+        ADD_PROCID    = (0x01 << 5),
+        ADD_THRDID    = (0x01 << 6),
+        DISP_CONSOLE  = (0x01 << 7),
         ALL           = 0xff
     };
 
@@ -63,16 +64,20 @@ public:
     LoggerImp(const LoggerImp &)    = delete;
     LoggerImp(LoggerImp &&)         = delete;
 
-    static void             LLogLevel(LLogLevelType level);
-    static LLogLevelType    LLogLevel();
+    static void LLogLevel(LLogLevelType level);
+    static void LLogLevel(LLogLevelType level, LLogLevelType levelConsole);
+    static bool LLogDo(LLogLevelType type);
+    static bool LLogDoConsole(LLogLevelType type);
 
     bool Flag_AddLevelTag() const       { return Flag(LLogFlags::ADD_LEVEL_TAG);        }
     bool Flag_AddTimeStamp() const      { return Flag(LLogFlags::ADD_TIMESTAMP);        }
+    bool Flag_AddDate() const           { return Flag(LLogFlags::ADD_DATE);             }
     bool Flag_AddFileLine() const       { return Flag(LLogFlags::ADD_FILELINE);         }
     bool Flag_AddLineFeed() const       { return Flag(LLogFlags::ADD_LINEFEED);         }
     bool Flag_AppProcessID() const      { return Flag(LLogFlags::ADD_PROCID);           }
     bool Flag_AppThreadID() const       { return Flag(LLogFlags::ADD_THRDID);           }
     bool Flag_DispConsole() const       { return Flag(LLogFlags::DISP_CONSOLE);         }
+
 
     bool Flag(LLogFlags flgitem) const  { return static_cast<flag_t>(_flags) & static_cast<flag_t>(flgitem);    }
     void FlagSet(LLogFlags flgitem)     { _flags |= static_cast<LoggerImp::flag_t>(flgitem);                    }
@@ -82,19 +87,22 @@ public:
 
     template<class T> LoggerImp &operator << (const T &msg)
     {
-        if(_logLevel >= LLogLevel())
+        if (LLogDo(_logLevel) || LLogDoConsole(_logLevel))
         {
             _sstream << msg;
         }
         return *this;
     }
 
-private:
+protected: //TODO: Add a getter for _logLevel
     LLogLevelType           _logLevel   = LLogLevelType::TRACE;
+
+private:
     std::ostringstream      _sstream;
     flag_t                  _flags      = static_cast<flag_t>(LLogFlags::ALL);
 
     static LLogLevelType    _logLevelEnv;
+    static LLogLevelType    _logLevelEnvConsole;
 };
 
 std::string to_string(LoggerImp::LLogLevelType type);

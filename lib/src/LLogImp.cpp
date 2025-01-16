@@ -3,28 +3,26 @@
 
 
 #include "LLogImp.h"
+#include "TimeFrame.h"
 
 #include <iostream>
+#include <iomanip>
 #include <cstring>
 #include <unistd.h>
 
 
+LoggerImp::LLogLevelType LoggerImp::_logLevelEnv        = LLogLevelType::TRACE;
+LoggerImp::LLogLevelType LoggerImp::_logLevelEnvConsole = LLogLevelType::TRACE;
 
-LoggerImp::LLogLevelType LoggerImp::_logLevelEnv = LLogLevelType::TRACE;
 
 
-
-inline std::string nowStr ()
+inline std::string nowStr (bool date = false)
 {
-    timespec    tsNow {};
-    tm          tmNow {};
+    timespec tsNow {};
+    clock_gettime(CLOCK_REALTIME, &tsNow);;
 
-    clock_gettime(CLOCK_REALTIME, &tsNow);
-    gmtime_r(&tsNow.tv_sec, &tmNow);
     std::ostringstream ss;
-    //ss << (tmNow.tm_year + 1900) << "." << tmNow.tm_mon << "." << tmNow.tm_mday;
-    //ss << " - "
-    ss << tmNow.tm_hour << ":" <<  tmNow.tm_min << ":" << tmNow.tm_sec << "." << tsNow.tv_nsec;
+    TimespecText2(tsNow, ss, date);
     return ss.str();
 }
 
@@ -53,16 +51,16 @@ LoggerImp::LoggerImp (LLogLevelType type, flag_t opt /*= 0xff*/)
     , _flags  (static_cast<flag_t>(opt))
 {
     if (Flag_AddLevelTag())
-        (*this) << "[" <<  to_string(type) << "] ";
+        (*this) << "[" <<  to_string(type)  << "] ";
 
     if (Flag_AppProcessID())
-        (*this) << "[" << getpid() << "] ";
+        (*this) << "[" <<  getpid()  << "] ";
 
     if (Flag_AppThreadID())
-        (*this) << "[" << gettid() << "] ";
+        (*this) << "[" <<  gettid()  << "] ";
 
     if (Flag_AddTimeStamp())
-        (*this)  << nowStr() << " - ";
+        (*this)  << nowStr(Flag_AddDate()) << " - ";
 }
 
 
@@ -76,7 +74,7 @@ LoggerImp::LoggerImp (LLogLevelType type, const std::string &msg,
 
 LoggerImp::~LoggerImp ()
 {
-    if (Flag_DispConsole() && (_logLevel >= LLogLevel()))
+    if (Flag_DispConsole() && (LLogDoConsole(_logLevel)))
         std::cout << LogText();
 }
 
@@ -84,7 +82,7 @@ LoggerImp::~LoggerImp ()
 std::string LoggerImp::LogText()
 {
     std::string txt;
-    if(_logLevel >= LLogLevel())
+    if (LLogDo(_logLevel) || LLogDoConsole(_logLevel))
     {
         txt = _sstream.str();
         if (Flag_AddLineFeed())
@@ -96,14 +94,25 @@ std::string LoggerImp::LogText()
 
 void LoggerImp::LLogLevel (LoggerImp::LLogLevelType level)
 {
-    LoggerImp::_logLevelEnv = level;
+    LoggerImp::LLogLevel(level, level);
+}
+
+void LoggerImp::LLogLevel(LLogLevelType level, LLogLevelType levelConsole)
+{
+    LoggerImp::_logLevelEnv        = level;
+    LoggerImp::_logLevelEnvConsole = levelConsole;
 }
 
 
-
-LoggerImp::LLogLevelType LoggerImp::LLogLevel ()
+bool LoggerImp::LLogDo(LLogLevelType type)
 {
-    return LoggerImp::_logLevelEnv;
+    return type >= LoggerImp::_logLevelEnv;
+}
+
+
+bool LoggerImp::LLogDoConsole(LLogLevelType type)
+{
+    return type >= LoggerImp::_logLevelEnvConsole;
 }
 
 
